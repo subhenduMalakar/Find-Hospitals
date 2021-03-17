@@ -30,7 +30,7 @@ public class Diagnostic {
 		return topCityList;
 	}
 	
-	public Homepage navigateBack()
+	public Homepage navigateBack() throws InterruptedException
 	{
 		driver.navigate().back();
 		Homepage homepage=new Homepage(driver);

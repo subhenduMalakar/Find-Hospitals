@@ -1,6 +1,9 @@
 package com.practo.pages;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -10,18 +13,29 @@ import org.openqa.selenium.support.PageFactory;
 public class Homepage {
 	public WebDriver driver;
 	public List<String> hospital_list_above;
+	public Set<String> windows;
+	public Iterator<String> it;
+	public String mainpage;
+	public String childpage;
 	
-	public Homepage(WebDriver driver) {
-		this.driver=driver;
-		
+	
+	public Homepage(WebDriver d) throws InterruptedException {
+		driver=d;
 	}
+
+//	@FindBy(xpath = "//*[@id=\"c-omni-container\"]/div/div[1]/div[1]/input")
+//	public WebElement location;
+	
+	String locationXpath="//*[@id=\"c-omni-container\"]/div/div[1]/div[1]/input";
+	
+	String searchXpath="//input[@data-qa-id='omni-searchbox-keyword']";
+
+	
+//	@FindBy(xpath = "//*[@id=\"c-omni-container\"]/div/div[1]/div[1]/input")
+//	public WebElement location;
 	
 	
-	@FindBy(xpath = "//*[@id=\"c-omni-container\"]/div/div[1]/div[1]/input")
-	public WebElement location;
-	
-	
-	@FindBy(xpath = "//*[@id=\"c-omni-container\"]/div/div[2]/div/input")
+	@FindBy(xpath = "//input[@data-qa-id='omni-searchbox-keyword']")
 	public WebElement search;
 	
 	
@@ -56,14 +70,16 @@ public class Homepage {
 	@FindBy(xpath = "//*[@id=\"container\"]/div[2]/div[1]/div[1]/div[2]/div/div[3]/div[1]/div/div[4]/a")
 	public WebElement Corporate_wellness;
 	
-	public void addLocation(String loc)
+	public void addLocation(String loc) throws InterruptedException
 	{
+		WebElement location=driver.findElement(By.xpath(locationXpath));
 		location.clear();
 		location.sendKeys(loc);
 	}
 	
 	public void addSearch(String sc)
 	{
+		WebElement search=driver.findElement(By.xpath(searchXpath));
 		search.clear();
 		search.sendKeys(sc);
 	}
@@ -111,7 +127,7 @@ public class Homepage {
 				hospital_list_above.add(hospital);
 			}
 		}
-		
+
 		return hospital_list_above;
 	}
 	
@@ -129,6 +145,15 @@ public class Homepage {
 	{
 		clickProviderDropDown();
 		clickCorporate_wellness();
+		
+		windows = driver.getWindowHandles();
+		it = windows.iterator();
+		
+		mainpage= it.next();
+		childpage = it.next();
+		
+		driver.switchTo().window(childpage);
+		
 		Corporate corporate=new Corporate(driver);
 		PageFactory.initElements(driver,corporate);
 		return corporate;
