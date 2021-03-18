@@ -93,7 +93,12 @@ public class Homepage {
 //	public WebElement Corporate_wellness;
 	
 	
-	
+	public String getDefaultLocation()
+	{
+		WebElement location=driver.findElement(By.xpath(locationXpath));
+		return location.getAttribute("value");
+		
+	}
 	public void addLocation(String loc)
 	{
 		WebElement location=driver.findElement(By.xpath(locationXpath));
@@ -113,6 +118,13 @@ public class Homepage {
 		WebElement search=driver.findElement(By.xpath(searchXpath));
 		search.clear();
 		search.sendKeys(sc);
+	}
+	
+	
+	public void enterKeyAtSearch()
+	{
+		WebElement search=driver.findElement(By.xpath(searchXpath));
+		search.sendKeys(Keys.ENTER);
 	}
 	
 	public void selectDropDownSearch()
@@ -147,7 +159,16 @@ public class Homepage {
 	
 	public boolean checkValidResult(String loc)
 	{
+		WebElement validR;
+		try{
+			WebElement validR1=driver.findElement(By.xpath(validResult_TC_FH_001_xpath));
+		}
+		catch(Exception e)
+		{
+			return false;
+		}
 		String validResult=driver.findElement(By.xpath(validResult_TC_FH_001_xpath)).getText();
+
 		String expected="Hospital in "+loc;
 		
 		System.out.println("valid---->"+validResult);

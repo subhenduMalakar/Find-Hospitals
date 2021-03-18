@@ -50,13 +50,13 @@ public class TestHomePage {
 	
 	
 //	@Test
-//	public void TC_FH_001()
-//	{
-//		Homepage H=new Homepage(driver);
-//		Assert.assertEquals(H.getCurrentUrl(), prop.getProperty("url"));
-//	}
+	public void TC_FH_001()
+	{
+		Homepage H=new Homepage(driver);
+		Assert.assertEquals(H.getCurrentUrl(), prop.getProperty("url"));
+	}
 	
-	@Test
+//	@Test(priority=1)
 	public void TC_FH_002()
 	{
 		String Location="Bangalore";
@@ -78,8 +78,47 @@ public class TestHomePage {
 //		H.clickAll_filters();
 //		H.clickHas_Parking_checkbox();
 
-		
 		Assert.assertEquals(H.checkValidResult(Location), true);
+	}
+	
+//	@Test(priority=2)
+	public void TC_FH_003()
+	{
+		String InvalidLocation="asdf";
+		String Search="Hospital";
+
+		Homepage H=new Homepage(driver);
+		String defaultLocation=H.getDefaultLocation();
+		System.out.println("Default Location================>"+defaultLocation);
+		
+		H.addLocation(InvalidLocation);
+		H.addSearch(Search);	
+		H.selectDropDownSearch();
+		
+		Assert.assertEquals(H.checkValidResult(defaultLocation), true);	
+	}
+	
+	@Test
+	public void TC_FH_004()
+	{
+		String Location="Bangalore";
+		String InvalidSearch="xyz";
+
+		Homepage H=new Homepage(driver);
+		//System.out.println("Default Location================>"+DefaultLocation);
+		
+		H.addLocation(Location);
+		H.selectDropDownLocation();
+		H.addSearch(InvalidSearch);	
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		H.enterKeyAtSearch();
+		
+		Assert.assertEquals(H.checkValidResult(Location), false);	
 	}
 	
 	
