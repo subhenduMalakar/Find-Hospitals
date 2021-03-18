@@ -7,7 +7,7 @@
         <methods>
           <include name="quitDriver"/>
           <include name="getDriver"/>
-          <include name="demo"/>
+          <include name="TC_FH_002"/>
         </methods>
       </class> <!-- com.practo.tests.TestHomePage -->
     </classes>
