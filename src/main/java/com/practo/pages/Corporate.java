@@ -13,6 +13,7 @@ public class Corporate {
 		this.driver=driver;
 	}
 	
+	
 	@FindBy(id = "name")
 	public WebElement name;
 	

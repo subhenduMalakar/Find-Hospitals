@@ -10,12 +10,14 @@ import org.testng.Assert;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
+import org.openqa.selenium.support.PageFactory;
 
+import com.practo.pages.Diagnostic;
 import com.practo.pages.Homepage;
 import com.practo.utils.DriverSetup;
 
 public class TestHomePage {
-	
+
 
 	public static String baseUrl;
 	public static WebDriver driver;
@@ -38,6 +40,7 @@ public class TestHomePage {
 		prop.load(fileInput);
 	}
 	
+
 //	@Test()
 //	public void demo() throws InterruptedException
 //	{
@@ -139,7 +142,7 @@ public class TestHomePage {
 	}
 
  
-	@Test(priority=5)
+	//@Test(priority=5)
 	public void TC_FH_006()
 	{
 		String Location="Bangalore";
@@ -168,7 +171,20 @@ public class TestHomePage {
 		}
 		else
 			Assert.assertTrue(false);
-			
+	}
+	
+	
+/*******************************/
+	@Test
+	public void TC_FH_009()
+	{
+		Homepage H=new Homepage(driver);
+		Diagnostic dia=H.ClickDiagnostics();
+		
+		System.out.println("-----------------------------");
+
+		System.out.println(dia.getTopCities());
+
 	}
 	
 	

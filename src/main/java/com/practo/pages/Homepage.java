@@ -45,7 +45,7 @@ public class Homepage {
 
 	String hospital_namesXpath="//h2[@data-qa-id='hospital_name']";
 
-	String diagnosticsPageLinkXpath="//*[@id=\"container\"]/div[2]/div[1]/div[1]/div[2]/div/div[2]/div[4]/a/div[1]]";
+	String diagnosticsPageLinkXpath="//*[@id=\"root\"]/div/div/div[1]/div[1]/div[2]/div/div[2]/div[4]/a/div[1]";
 
 	String providerDropDownXpath="//*[@id=\"container\"]/div[2]/div[1]/div[1]/div[2]/div/div[3]/div[1]/span[2]";
 
