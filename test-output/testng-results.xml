@@ -2,20 +2,20 @@
 <testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2021-03-18T17:56:18 IST" name="Suite" finished-at="2021-03-18T17:57:00 IST" duration-ms="42032">
+  <suite started-at="2021-03-22T18:36:15 IST" name="Suite" finished-at="2021-03-22T18:36:52 IST" duration-ms="36625">
     <groups>
     </groups>
-    <test started-at="2021-03-18T17:56:18 IST" name="Test" finished-at="2021-03-18T17:57:00 IST" duration-ms="42032">
+    <test started-at="2021-03-22T18:36:15 IST" name="Test" finished-at="2021-03-22T18:36:52 IST" duration-ms="36625">
       <class name="com.practo.tests.TestHomePage">
-        <test-method is-config="true" signature="getDriver()[pri:0, instance:com.practo.tests.TestHomePage@f381794]" started-at="2021-03-18T17:55:09 IST" name="getDriver" finished-at="2021-03-18T17:56:18 IST" duration-ms="69198" status="PASS">
+        <test-method is-config="true" signature="getDriver()[pri:0, instance:com.practo.tests.TestHomePage@7e9131d5]" started-at="2021-03-22T18:35:59 IST" name="getDriver" finished-at="2021-03-22T18:36:15 IST" duration-ms="16673" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- getDriver -->
-        <test-method signature="TC_FH_004()[pri:0, instance:com.practo.tests.TestHomePage@f381794]" started-at="2021-03-18T17:56:19 IST" name="TC_FH_004" finished-at="2021-03-18T17:57:00 IST" duration-ms="41894" status="PASS">
+        <test-method signature="TC_FH_006()[pri:5, instance:com.practo.tests.TestHomePage@7e9131d5]" started-at="2021-03-22T18:36:15 IST" name="TC_FH_006" finished-at="2021-03-22T18:36:52 IST" duration-ms="36526" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- TC_FH_004 -->
-        <test-method is-config="true" signature="quitDriver()[pri:0, instance:com.practo.tests.TestHomePage@f381794]" started-at="2021-03-18T17:57:01 IST" name="quitDriver" finished-at="2021-03-18T17:57:02 IST" duration-ms="1716" status="PASS">
+        </test-method> <!-- TC_FH_006 -->
+        <test-method is-config="true" signature="quitDriver()[pri:0, instance:com.practo.tests.TestHomePage@7e9131d5]" started-at="2021-03-22T18:36:52 IST" name="quitDriver" finished-at="2021-03-22T18:36:54 IST" duration-ms="1564" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- quitDriver -->

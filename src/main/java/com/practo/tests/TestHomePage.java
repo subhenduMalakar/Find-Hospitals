@@ -89,7 +89,6 @@ public class TestHomePage {
 
 		Homepage H=new Homepage(driver);
 		String defaultLocation=H.getDefaultLocation();
-		System.out.println("Default Location================>"+defaultLocation);
 		
 		H.addLocation(InvalidLocation);
 		H.addSearch(Search);	
@@ -98,22 +97,19 @@ public class TestHomePage {
 		Assert.assertEquals(H.checkValidResult(defaultLocation), true);	
 	}
 	
-	@Test
+//	@Test(priority=3)
 	public void TC_FH_004()
 	{
 		String Location="Bangalore";
 		String InvalidSearch="xyz";
 
-		Homepage H=new Homepage(driver);
-		//System.out.println("Default Location================>"+DefaultLocation);
-		
+		Homepage H=new Homepage(driver);		
 		H.addLocation(Location);
 		H.selectDropDownLocation();
 		H.addSearch(InvalidSearch);	
 		try {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		H.enterKeyAtSearch();
@@ -121,8 +117,59 @@ public class TestHomePage {
 		Assert.assertEquals(H.checkValidResult(Location), false);	
 	}
 	
-	
+//	@Test(priority=4)
+	public void TC_FH_005()
+	{
+		String Location="xyz";
+		String InvalidSearch="xyz";
 
+		Homepage H=new Homepage(driver);
+		//System.out.println("Default Location================>"+DefaultLocation);
+		
+		H.addLocation(Location);
+		H.addSearch(InvalidSearch);	
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		H.enterKeyAtSearch();
+		
+		Assert.assertEquals(H.checkValidResult(Location), false);	
+	}
+
+ 
+	@Test(priority=5)
+	public void TC_FH_006()
+	{
+		String Location="Bangalore";
+		String validSearch="Hospital";
+
+		Homepage H=new Homepage(driver);
+		//System.out.println("Default Location================>"+DefaultLocation);
+		
+		H.addLocation(Location);
+		H.selectDropDownLocation();
+		H.addSearch(validSearch);	
+		H.selectDropDownSearch();
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		H.clickOpen_24X7_checkbox();
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		if(H.countOpen_24X7()<10) {
+			Assert.assertTrue(true);
+		}
+		else
+			Assert.assertTrue(false);
+			
+	}
 	
 	
 	

@@ -34,6 +34,8 @@ public class Homepage {
 
 	
 	String Open_24X7_checkboxXpath="//*[@id=\"container\"]/div[3]/div/div[1]/div/div/header/div[1]/div/div[3]/label/div";
+	
+	String countOpen_24X7Xpath="span[data-qa-id=\"open_24x7\"]";
 
 	String all_filtersXpath="//*[@id=\"container\"]/div[3]/div/div[1]/div/div/header/div[1]/div/div[4]/span";
 	
@@ -50,6 +52,8 @@ public class Homepage {
 	String Corporate_wellnessXpath="//*[@id=\"container\"]/div[2]/div[1]/div[1]/div[2]/div/div[3]/div[1]/div/div[4]/a";
 	
 	String validResult_TC_FH_001_xpath="//*[@id=\"container\"]/div[3]/div/div[2]/div[1]/div/div[1]/div[1]/h1";
+	
+	
 	
 	
 	
@@ -140,6 +144,16 @@ public class Homepage {
 	{
 		WebElement Open_24X7_checkbox=driver.findElement(By.xpath(Open_24X7_checkboxXpath));
 		Open_24X7_checkbox.click();
+	}
+	
+	public int countOpen_24X7()
+	{
+		List<WebElement> count=driver.findElements(By.xpath(countOpen_24X7Xpath));
+
+		int n = count.size();
+		
+		return n;
+
 	}
 	
 	public void clickAll_filters()
