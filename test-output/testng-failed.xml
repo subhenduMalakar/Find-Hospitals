@@ -3,13 +3,13 @@
 <suite name="Failed suite [Suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Test(failed)">
     <classes>
-      <class name="com.practo.tests.TestHomePage">
+      <class name="com.practo.tests.TestDiagonsticPage">
         <methods>
-          <include name="quitDriver"/>
           <include name="TC_FH_009"/>
+          <include name="quitDriver"/>
           <include name="getDriver"/>
         </methods>
-      </class> <!-- com.practo.tests.TestHomePage -->
+      </class> <!-- com.practo.tests.TestDiagonsticPage -->
     </classes>
   </test> <!-- Test(failed) -->
 </suite> <!-- Failed suite [Suite] -->

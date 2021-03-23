@@ -12,6 +12,7 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 import org.openqa.selenium.support.PageFactory;
 
+import com.practo.baseClass.BaseClass;
 import com.practo.pages.Diagnostic;
 import com.practo.pages.Homepage;
 import com.practo.utils.DriverSetup;
@@ -50,7 +51,6 @@ public class TestHomePage {
 //		H.addSearch("Hospital");	
 //		H.selectDropDownSearch()
 //	}
-	
 	
 //	@Test
 	public void TC_FH_001()
@@ -187,7 +187,8 @@ public class TestHomePage {
 
 	}
 	
-	
+
+
 	
 	@AfterSuite
 	public void quitDriver()

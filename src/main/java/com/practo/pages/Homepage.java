@@ -7,11 +7,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 
-public class Homepage {
+public class Homepage{
 	
 	public WebDriver driver;
 	public List<String> hospital_list_above;
@@ -24,7 +23,6 @@ public class Homepage {
 	public Homepage(WebDriver d){
 		driver=d;
 	}
-
 
 	String locationXpath="//*[@id=\"c-omni-container\"]/div/div[1]/div[1]/input";
 	String BangaloreXpath="//div[text()='Bangalore']";
@@ -137,9 +135,6 @@ public class Homepage {
 		Hospital.click();
 	}
 	
-	
-	
-	
 	public void clickOpen_24X7_checkbox()
 	{
 		WebElement Open_24X7_checkbox=driver.findElement(By.xpath(Open_24X7_checkboxXpath));
@@ -153,7 +148,6 @@ public class Homepage {
 		int n = count.size();
 		
 		return n;
-
 	}
 	
 	public void clickAll_filters()
