@@ -1,5 +1,6 @@
 package com.practo.pages;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -11,8 +12,6 @@ import org.openqa.selenium.support.PageFactory;
 
 public class Diagnostic {
 	public WebDriver driver;
-	public List<String> topCityList;
-	private List<String> topCityList2;
 	
 	public Diagnostic(WebDriver driver)
 	{
@@ -20,7 +19,8 @@ public class Diagnostic {
 	}
 	public List<String> getTopCities()
 	{	
-			topCityList2 = null;
+			ArrayList<String> list=new ArrayList<String>();
+
 			try {
 				Thread.sleep(3000);
 			} catch (InterruptedException e) {
@@ -31,11 +31,11 @@ public class Diagnostic {
 			for (WebElement cities : topcitiesname)
 			{
 				String city = cities.getText();
-				//topCityList2.add(city);
-				System.out.println(city);
+				list.add(city);
+				//System.out.println(city);
 			}
 
-		return null;
+		return list;
 	}
 	
 	public Homepage navigateBack() throws InterruptedException

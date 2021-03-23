@@ -3,9 +3,14 @@ package com.practo.tests;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
@@ -16,6 +21,7 @@ import com.practo.baseClass.BaseClass;
 import com.practo.pages.Diagnostic;
 import com.practo.pages.Homepage;
 import com.practo.utils.DriverSetup;
+import com.practo.utils.ExcelUtils;
 
 public class TestHomePage {
 
@@ -173,21 +179,120 @@ public class TestHomePage {
 			Assert.assertTrue(false);
 	}
 	
+//	@Test(priority=6)
+	public void TC_FH_007()
+	{
+		String Location="Bangalore";
+		String validSearch="Hospital";
+
+		Homepage H=new Homepage(driver);
+		//System.out.println("Default Location================>"+DefaultLocation);
+		
+		H.addLocation(Location);
+		H.selectDropDownLocation();
+		H.addSearch(validSearch);	
+		H.selectDropDownSearch();
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		H.clickOpen_24X7_checkbox();
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		H.clickAll_filters();
+		H.clickHas_Parking_checkbox();
+		
+		Assert.assertEquals(H.checkValidResult(Location), true);	
+	}
+	@Test(priority=7)
+	public void TC_FH_008()
+	{
+		String Location="Bangalore";
+		String validSearch="Hospital";
+
+		Homepage H=new Homepage(driver);
+		//System.out.println("Default Location================>"+DefaultLocation);
+		
+		H.addLocation(Location);
+		H.selectDropDownLocation();
+		H.addSearch(validSearch);	
+		H.selectDropDownSearch();
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		H.clickOpen_24X7_checkbox();
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		H.clickAll_filters();
+		H.clickHas_Parking_checkbox();	
+		
+		
+		List<String> hospitals=H.getHospitals();
+		for(String str:hospitals)
+		{
+			System.out.println(str);
+		}
+		ExcelUtils excel=new ExcelUtils();
+		try {
+			excel.saveToExcel(hospitals,"Hospitals");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
 	
-/*******************************/
-	@Test
+//	@Test(priority=8)
 	public void TC_FH_009()
 	{
 		Homepage H=new Homepage(driver);
 		Diagnostic dia=H.ClickDiagnostics();
+		//System.out.println("-----------------------------");
+		ArrayList<String> list=(ArrayList) dia.getTopCities();
+		for(String str:list)
+		{
+			System.out.println(str);
+		}
 		
-		System.out.println("-----------------------------");
-
-		System.out.println(dia.getTopCities());
+		ExcelUtils excel=new ExcelUtils();
+		try {
+			excel.saveToExcel(list,"TopCities");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 	
-
+//	@Test(priority=9)
+	public void TC_FH_010()
+	{
+		Homepage H=new Homepage(driver);
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		H.clickProviderDropDown();
+		Assert.assertEquals(H.isPresntCorporate_wellness(), true);
+	}
+	
+//	@Test(priority=10)
+	public void TC_FH_011()
+	{
+		Homepage H=new Homepage(driver);
+		H.switchCorporate();
+		System.out.println(H.getCurrentUrl());
+		Assert.assertEquals(H.getCurrentUrl(), "https://www.practo.com/plus/corporate");
+	}
 
 	
 	@AfterSuite

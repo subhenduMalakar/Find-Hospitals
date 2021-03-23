@@ -1,9 +1,11 @@
 package com.practo.pages;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,7 +15,6 @@ import org.openqa.selenium.support.PageFactory;
 public class Homepage{
 	
 	public WebDriver driver;
-	public List<String> hospital_list_above;
 	public Set<String> windows;
 	public Iterator<String> it;
 	public String mainpage;
@@ -45,9 +46,9 @@ public class Homepage{
 
 	String diagnosticsPageLinkXpath="//*[@id=\"root\"]/div/div/div[1]/div[1]/div[2]/div/div[2]/div[4]/a/div[1]";
 
-	String providerDropDownXpath="//*[@id=\"container\"]/div[2]/div[1]/div[1]/div[2]/div/div[3]/div[1]/span[2]";
+	String providerDropDownXpath="//*[@id=\"root\"]/div/div/div[1]/div[1]/div[2]/div/div[3]/div[1]/span[2]";
 
-	String Corporate_wellnessXpath="//*[@id=\"container\"]/div[2]/div[1]/div[1]/div[2]/div/div[3]/div[1]/div/div[4]/a";
+	String Corporate_wellnessXpath="//*[@id=\"root\"]/div/div/div[1]/div[1]/div[2]/div/div[3]/div[1]/div/div[4]/a";
 	
 	String validResult_TC_FH_001_xpath="//*[@id=\"container\"]/div[3]/div/div[2]/div[1]/div/div[1]/div[1]/h1";
 	
@@ -201,12 +202,26 @@ public class Homepage{
 		providerDropDown.click();
 	}
 	
+	public boolean isPresntCorporate_wellness() //
+	{
+	try {
+			driver.findElement(By.xpath(Corporate_wellnessXpath));
+			return true;
+		}
+	catch(Exception e)
+		{
+			return false;
+		}
+
+	}
+	
 	public void clickCorporate_wellness()
 	{
 		WebElement Corporate_wellness=driver.findElement(By.xpath(Corporate_wellnessXpath));
 
 		Corporate_wellness.click();
 	}
+	
 	public String getCurrentUrl()
 	{
 		
@@ -214,28 +229,55 @@ public class Homepage{
 	}
 	
 	
-	public List<String> getHospitals() throws InterruptedException
+	public List<String> getHospitals() 
 	{
-		List<WebElement> rating=driver.findElements(By.xpath(ratingXpath));
-		List<WebElement> hospital_names=driver.findElements(By.xpath(hospital_namesXpath));
+		ArrayList<String> list=new ArrayList<String>();
 
-		int n = rating.size();
-		
-		for (int i = 0; i < n; i++) 
+		for(int i=0;i<=20;i++)
 		{
-			String[] ratings = new String[n];
-			ratings[i] = rating.get(i).getText();
-			double value = Double.parseDouble(ratings[i].replaceAll("[^0-9]", ""));
-			if (value > 3.5) 
-			{
-				Thread.sleep(1000); ////////////////Sleep
-				String hospital = hospital_names.get(i).getText();
-				hospital_list_above.add(hospital);
+			JavascriptExecutor js	=((JavascriptExecutor) driver);
+			js.executeScript("window.scrollTo(0,document.body.scrollHeight-1000)");
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
 		}
-
-		return hospital_list_above;
-	}
+		
+		
+		List<WebElement> cards = driver.findElements(By.xpath("//div[@class='c-card']"));
+		int n = cards.size();
+		//System.out.println("***************Display Hospital Names*********************");
+		int cc=0;
+		for(int i=0;i<n;i++)
+		{
+			WebElement E = cards.get(i);
+			//System.out.println("***************E"+"--->"+i);
+			String rating;
+			try {
+				//System.out.println("***************Try");
+				rating=E.getAttribute("innerHTML").split("class=\"common__star-rating__value\">")[1].split("</span><span class=\"\">")[0];
+			}
+			catch(Exception e)
+			{
+				//System.out.println("***************continue");
+				continue;
+			}
+			double value = Double.parseDouble(rating);
+			if (value > 3.5)
+			{
+				//System.out.println("***************If");
+				String hospital_t;
+				hospital_t=E.getAttribute("innerHTML").split("class=\"u-title-font u-c-pointer u-bold\">")[1].split("</h2></a><div")[0];
+				//System.out.println(hospital_t+" - "+value);
+				list.add(hospital_t);
+				cc++;
+			}
+		}
+		//System.out.println("***************Count"+"--->"+cc);
+		
+		return list;
+}
 	
 	
 	public Diagnostic ClickDiagnostics()
@@ -249,10 +291,10 @@ public class Homepage{
 	}
 	
 	
-	public Corporate ClickCorporate()
+	public Corporate switchCorporate() ////Change name 23/03/2021
 	{
-		clickProviderDropDown();
-		clickCorporate_wellness();
+		clickProviderDropDown(); 
+		clickCorporate_wellness(); 
 		
 		windows = driver.getWindowHandles();
 		it = windows.iterator();
