@@ -23,6 +23,7 @@ public class Homepage{
 	
 	public Homepage(WebDriver d){
 		driver=d;
+		driver.get("https://www.practo.com/");
 	}
 
 	String locationXpath="//*[@id=\"c-omni-container\"]/div/div[1]/div[1]/input";
@@ -243,8 +244,7 @@ public class Homepage{
 				e.printStackTrace();
 			}
 		}
-		
-		
+
 		List<WebElement> cards = driver.findElements(By.xpath("//div[@class='c-card']"));
 		int n = cards.size();
 		//System.out.println("***************Display Hospital Names*********************");
@@ -302,6 +302,7 @@ public class Homepage{
 		mainpage= it.next();
 		childpage = it.next();
 		
+		driver.close();
 		driver.switchTo().window(childpage);
 		
 		Corporate corporate=new Corporate(driver);

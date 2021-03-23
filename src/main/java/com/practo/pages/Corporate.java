@@ -96,7 +96,7 @@ public class Corporate {
 	public String getThankYouMsg()
 	{
 		WebElement thankYouMsg=driver.findElement(By.id("thankyou-section"));
-		String tmsg=thankYouMsg.getText();
+		String tmsg=thankYouMsg.getText().replace("\n","").trim();
 		return tmsg;
 	}
 

@@ -5,7 +5,10 @@
     <classes>
       <class name="com.practo.tests.TestHomePage">
         <methods>
-          <include name="TC_FH_009"/>
+          <include name="quitDriver"/>
+          <include name="getDriver"/>
+          <include name="TC_FH_021"/>
+          <include name="TC_FH_020"/>
         </methods>
       </class> <!-- com.practo.tests.TestHomePage -->
     </classes>
