@@ -1,5 +1,10 @@
 package com.practo.pages;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
+
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
@@ -9,31 +14,22 @@ import org.openqa.selenium.support.FindBy;
 
 public class Corporate {
 	public WebDriver driver;
-
+	FileInputStream fileInput=null;
+	Properties prop;
 	public Corporate(WebDriver driver) {
 		this.driver=driver;
+		File file = new File(System.getProperty("user.dir") + "\\config.properties");
+		try {
+			fileInput = new FileInputStream(file);
+			prop = new Properties();
+			prop.load(fileInput);
+			fileInput.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
-	
-	
-//	@FindBy(id = "name")
-//	public WebElement name;
-//	
-//	@FindBy(id = "organization_name")
-//	public WebElement organization_name;
-//
-//	@FindBy(id = "official_email_id")
-//	public WebElement official_email_id;
-//	
-//	@FindBy(id = "official_phone_no")
-//	public WebElement official_phone_no;
-//	
-//	@FindBy(id = "button-style")
-//	public WebElement button;
-//
-//	@FindBy(id = "thankyou-section")
-//	public WebElement thankYouMsg;
 
-	
 	public void setName(String nam)
 	{
 		WebElement name=driver.findElement(By.id("name"));

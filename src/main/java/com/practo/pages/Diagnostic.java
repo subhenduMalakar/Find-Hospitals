@@ -1,38 +1,48 @@
 package com.practo.pages;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+
+import com.practo.utils.getProperties;
 
 public class Diagnostic {
 	public WebDriver driver;
+	FileInputStream fileInput;
+	Properties prop;
+	
 	
 	public Diagnostic(WebDriver driver)
 	{
 		this.driver=driver;
+		
 	}
+	
 	public List<String> getTopCities()
 	{	
 			ArrayList<String> list=new ArrayList<String>();
+			
+			prop=getProperties.getPropertiesData();
+
 
 			try {
 				Thread.sleep(3000);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			List<WebElement> topcitiesname = driver.findElements(By.xpath("//div[@class='u-margint--standard o-f-color--primary']"));
+			List<WebElement> topcitiesname = driver.findElements(By.xpath(prop.getProperty("TopCities"))); //
 			for (WebElement cities : topcitiesname)
 			{
 				String city = cities.getText();
 				list.add(city);
-				//System.out.println(city);
 			}
 
 		return list;

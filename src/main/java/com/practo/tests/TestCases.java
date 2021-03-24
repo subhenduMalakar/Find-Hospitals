@@ -7,58 +7,55 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
-import org.openqa.selenium.support.PageFactory;
 
-import com.practo.baseClass.BaseClass;
 import com.practo.pages.Corporate;
 import com.practo.pages.Diagnostic;
 import com.practo.pages.Homepage;
 import com.practo.utils.DriverSetup;
 import com.practo.utils.ExcelUtils;
+import com.practo.utils.getProperties;
 
 public class TestCases {
 
-
+	//
 	public static String baseUrl;
 	public static WebDriver driver;
 	public static String browserName;
 	public DriverSetup setup;
 	
-	Properties prop;
-	FileInputStream fileInput = null;
+	public static Properties prop;
+	public static FileInputStream fileInput = null;
 
-	
+	//Annotation to invoke driver
 	@BeforeSuite
 	public void getDriver() throws InterruptedException, IOException
 	{
+		//driver setup 
 		setup=new DriverSetup();
 		driver=DriverSetup.getWebDriver();
 		
-		File file = new File(System.getProperty("user.dir") + "\\config.properties");
-		fileInput = new FileInputStream(file);
-	    prop = new Properties();
-		prop.load(fileInput);
+		//setup and get system properties
+		prop=getProperties.getPropertiesData();
 	}
-
+	
+	//check if application opens in different browser 
 	@Test
 	public void TC_FH_001()
 	{
-		Homepage H=new Homepage(driver);
-		Assert.assertEquals(H.getCurrentUrl(), prop.getProperty("url"));
+		Homepage H=new Homepage(driver); //object creation of homepage 
+		Assert.assertEquals(H.getCurrentUrl(), prop.getProperty("url")); //check current url with expected url
 	}
 	
+	//check if application 
 	@Test(priority=1)
 	public void TC_FH_002()
 	{
-		String Location="Banga";
+		String Location="Bangalor"; //intentional missing character in location for better suggestion
 		String Search="Hospital";
 		
 		Homepage H=new Homepage(driver);
@@ -89,7 +86,7 @@ public class TestCases {
 	@Test(priority=3)
 	public void TC_FH_004()
 	{
-		String Location="Banga";
+		String Location="Bangalor";
 		String InvalidSearch="xyz";
 
 		Homepage H=new Homepage(driver);		
@@ -113,7 +110,6 @@ public class TestCases {
 		String InvalidSearch="xyz";
 
 		Homepage H=new Homepage(driver);
-		//System.out.println("Default Location================>"+DefaultLocation);
 		
 		H.addLocation(Location);
 		H.addSearch(InvalidSearch);	
@@ -126,17 +122,15 @@ public class TestCases {
 		
 		Assert.assertEquals(H.checkValidResult(Location), false);	
 	}
-
  
 	@Test(priority=5)
 	public void TC_FH_006()
 	{
-		String Location="Banga";
+		String Location="Bangalor";
 		String validSearch="Hospital";
 
 		Homepage H=new Homepage(driver);
-		//System.out.println("Default Location================>"+DefaultLocation);
-		
+				
 		H.addLocation(Location);
 		H.selectDropDownLocation();
 		H.addSearch(validSearch);	
@@ -152,7 +146,7 @@ public class TestCases {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		if(H.countOpen_24X7()<10) {
+		if(H.countOpen_24X7()==10) {
 			Assert.assertTrue(true);
 		}
 		else
@@ -162,12 +156,11 @@ public class TestCases {
 	@Test(priority=6)
 	public void TC_FH_007()
 	{
-		String Location="Banga";
+		String Location="Bangalor";
 		String validSearch="Hospital";
 
 		Homepage H=new Homepage(driver);
-		//System.out.println("Default Location================>"+DefaultLocation);
-		
+				
 		H.addLocation(Location);
 		H.selectDropDownLocation();
 		H.addSearch(validSearch);	
@@ -190,12 +183,17 @@ public class TestCases {
 	}
 	@Test(priority=7)
 	public void TC_FH_008()
-	{
-		String Location="Banga";
+		{		
+		try {
+			Thread.sleep(4000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		String Location="Bangalor";
 		String validSearch="Hospital";
 
 		Homepage H=new Homepage(driver);
-		//System.out.println("Default Location================>"+DefaultLocation);
 		
 		H.addLocation(Location);
 		H.selectDropDownLocation();
@@ -215,7 +213,7 @@ public class TestCases {
 		H.clickAll_filters();
 		H.clickHas_Parking_checkbox();	
 		
-		
+		System.out.println("===================Hospital names==================");
 		List<String> hospitals=H.getHospitals();
 		for(String str:hospitals)
 		{
@@ -234,7 +232,7 @@ public class TestCases {
 	{
 		Homepage H=new Homepage(driver);
 		Diagnostic dia=H.ClickDiagnostics();
-		//System.out.println("-----------------------------");
+		System.out.println("===================Top Cities==================");
 		ArrayList<String> list=(ArrayList) dia.getTopCities();
 		for(String str:list)
 		{
@@ -501,6 +499,7 @@ public class TestCases {
 			Assert.assertTrue(false);
 		}
 	}
+	
 	@Test(priority=20)
 	public void TC_FH_021(){
 		Homepage H=new Homepage(driver);
