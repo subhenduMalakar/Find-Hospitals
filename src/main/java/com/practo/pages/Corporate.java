@@ -1,9 +1,17 @@
 package com.practo.pages;
 
+import java.awt.AWTException;
+import java.awt.HeadlessException;
+import java.awt.Rectangle;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
+
+import javax.imageio.ImageIO;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -12,8 +20,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import com.practo.utils.*;
+
 public class Corporate {
 	public WebDriver driver;
+	public Alert alt;
 	FileInputStream fileInput=null;
 	Properties prop;
 	public Corporate(WebDriver driver) {
@@ -66,21 +77,28 @@ public class Corporate {
 	
 	}
 	
-	public String getAlert()
+	public String getAlert() 
 	{
-		
+
 		Alert alt=driver.switchTo().alert();
 		String msg=alt.getText();
 		alt.accept();
 		
 		return msg;
 	}
+	public void captureAlert(String name) throws Exception {
+	String screenshot = System.getProperty("user.dir") + ".\\ScreenShots\\" +name+" "+ DateUtil.getTimeStamp() + ".png";
+	BufferedImage image = new Robot()
+			.createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
+	ImageIO.write(image, "png", new File(screenshot));
+	Thread.sleep(2000);
+	}
 	
 	public boolean isAlertPresent() 
 	{ 
 	    try 
 	    { 
-	        driver.switchTo().alert(); 
+	    	driver.switchTo().alert(); 
 	        return true; 
 	    } 
 	    catch (NoAlertPresentException Ex) 

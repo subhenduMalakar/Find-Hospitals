@@ -172,6 +172,11 @@ public class Homepage{
 	public List<String> getHospitals() 
 	{
 		ArrayList<String> list=new ArrayList<String>();
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 
 		for(int i=0;i<=20;i++)
 		{
