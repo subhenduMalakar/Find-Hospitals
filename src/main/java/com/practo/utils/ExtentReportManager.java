@@ -9,7 +9,7 @@ import com.aventstack.extentreports.reporter.configuration.ChartLocation;
 public class ExtentReportManager {
 	public static ExtentReports report;
 	public static ExtentTest logger;
-
+//To generate ExtendReports
 	public static ExtentReports getReportInstance() 
 	{
 
@@ -35,10 +35,11 @@ public class ExtentReportManager {
 
 		return report;
 	}
-	
+	//To Report pass
 	public void reportPass(String reportString) {
 		logger.log(Status.PASS, reportString);
 	}
+	//To Report fail
 	public void reportFail(String reportString) {
 		logger.log(Status.FAIL, reportString);
 	}

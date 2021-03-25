@@ -1,6 +1,5 @@
 package com.practo.tests;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,7 +15,6 @@ import org.testng.annotations.Test;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
-import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.practo.pages.Corporate;
 import com.practo.pages.Diagnostic;
 import com.practo.pages.Homepage;
@@ -24,7 +22,6 @@ import com.practo.utils.DriverSetup;
 import com.practo.utils.ExcelUtils;
 import com.practo.utils.getProperties;
 import com.practo.utils.ExtentReportManager;
-import com.practo.utils.DateUtil;
 import com.practo.utils.Screenshot;
 
 public class TestCases {
@@ -54,24 +51,24 @@ public class TestCases {
 		//create logger report
 		logger = report.createTest("Launching the website");
 		logger.log(Status.INFO, "Opening the Website");
-		
+
 		Homepage H = new Homepage(driver); // object creation of homepage
 		Assert.assertEquals(H.getCurrentUrl(), prop.getProperty("url"));// check current url with expected url
 
 		Screenshot screenshot = new Screenshot(H.driver); //Take screenshot of page
 
 		screenshot.takeScreenshot("Open Application");
-		
+
 		logger.log(Status.PASS,prop.getProperty("url") + " launched succesfully"); //log report to check if testcase passed
 	}
 	// check for application functions with valid location and valid search
 	@Test(priority = 1)
 	public void TC_FH_002() {
-		
+
 		logger = report.createTest("To display Hospital Names with valid location and valid Search");
 		String Location = "Bangalor"; // intentional missing character in location for better suggestion
 		String Search = "Hospital";
-		
+
 		//passing inputs and check success status with logger report and taking screenshots
 		Homepage H = new Homepage(driver);
 		H.addLocation(Location);
@@ -83,7 +80,7 @@ public class TestCases {
 			Screenshot screenshot = new Screenshot(H.driver);
 			screenshot.takeScreenshot("Valid Details");
 			logger.log(Status.INFO, "Screenshot captured");
-			
+
 			Assert.assertEquals(H.checkValidResult("Bangalore"), true);
 			logger.log(Status.PASS, "Success: Selecting Hospitals in Bangalore");
 		}catch(Exception e) {
@@ -113,7 +110,7 @@ public class TestCases {
 			Assert.assertTrue(false);
 		}
 	}
-	
+
 	// check for application functions with valid location and invalid search
 	@Test(priority = 3)
 	public void TC_FH_004() throws IOException {
@@ -169,7 +166,7 @@ public class TestCases {
 			Assert.assertEquals(H.checkValidResult(InvalidLocation), false);
 		}
 		catch(Exception e){
-			logger.log(Status.FAIL, "xyz cannot be selected in xyz location");
+			logger.log(Status.FAIL, "xyz can be selected in xyz location");
 			Assert.assertEquals(H.checkValidResult(InvalidLocation), true);
 		}
 	}
@@ -243,10 +240,10 @@ public class TestCases {
 		logger.log(Status.INFO, "Select all filters dropdown");
 		H.clickHas_Parking_checkbox();
 		try{
-			logger.log(Status.PASS, "Has parking selected from all filters dropdown");
+			logger.log(Status.PASS, "Has parking selected from all filters dropdown in Bangalore");
 			Assert.assertEquals(H.checkValidResult("Bangalore"), true);
 		}catch(Exception e){
-			logger.log(Status.FAIL, "Has parking not selected from all filters dropdown");
+			logger.log(Status.FAIL, "Has parking not selected from all filters dropdown in bangalore");
 			Assert.assertEquals(H.checkValidResult("Bangalore"), true);
 		}
 	}
@@ -286,7 +283,7 @@ public class TestCases {
 
 		logger.log(Status.INFO, " Hospital names should be displayed with rating more than 3.5");
 
-			try{
+		try{
 			logger.log(Status.PASS, "Displays all Hopitals name above 3.5 rating");
 		}
 		catch(Exception e){
@@ -315,7 +312,7 @@ public class TestCases {
 		logger.log(Status.INFO, "Select Diagnostics on homepage");
 		Diagnostic dia = H.ClickDiagnostics();
 		System.out.println("===================Top Cities==================");
-		ArrayList<String> list = (ArrayList) dia.getTopCities();
+		ArrayList<String> list = (ArrayList<String>) dia.getTopCities();
 		logger.log(Status.INFO, "Display top cities name");
 		Screenshot screenshot = new Screenshot(H.driver);
 		screenshot.takeScreenshot("Display Topcities");
@@ -343,6 +340,7 @@ public class TestCases {
 	@Test(priority = 9)
 	public void TC_FH_010() {
 		logger = report.createTest("Click For Providers dropdown on homepage");
+		//passing inputs and check success status with logger report
 		Homepage H = new Homepage(driver);
 		try {
 			Thread.sleep(3000);
@@ -351,11 +349,11 @@ public class TestCases {
 		}
 		H.clickProviderDropDown();
 		try{
-			logger.log(Status.PASS, "Clicked on providers drop down");
+			logger.log(Status.PASS, "Clicked on for providers drop down");
 			Assert.assertEquals(H.isPresntCorporate_wellness(), true);
 		}
 		catch(Exception e){
-			logger.log(Status.FAIL, "Clicked on For providers drop down");
+			logger.log(Status.FAIL, "When For providers drop down is not clicked");
 			Assert.assertEquals(H.isPresntCorporate_wellness(), false);
 		}
 	}
@@ -365,6 +363,7 @@ public class TestCases {
 	public void TC_FH_011() {
 		logger = report
 				.createTest("Select Corporate Wellness from For providers drop down it should navigate to new window");
+		//passing inputs and check success status with logger report
 		Homepage H = new Homepage(driver);
 		H.switchCorporate();
 		logger.log(Status.INFO, "Select Corporate Wellness from For providers drop down");
@@ -383,6 +382,7 @@ public class TestCases {
 	@Test(priority = 11)
 	public void TC_FH_012() throws Exception {
 		logger = report.createTest("To schedule a demo with all null field values");
+		//passing inputs and check success status with logger report
 		Homepage H = new Homepage(driver);
 		Corporate C = H.switchCorporate();
 		C.setName("");
@@ -392,13 +392,12 @@ public class TestCases {
 		C.clickButton();
 		C.captureAlert("Null Fields");
 		logger.log(Status.INFO, "Schedule a demo with all null fields");
-
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		logger.log(Status.INFO, "Checking heck whether alert is present");
+		logger.log(Status.INFO, "Checking  whether alert is present");
 		if (C.isAlertPresent()) {
 			logger.log(Status.INFO, "Alert is present");
 			String s1=C.getAlert();
@@ -416,11 +415,11 @@ public class TestCases {
 			Assert.assertTrue(false);
 		}
 	}
-
 	//schedule a demo with name field left empty
 	@Test(priority = 12)
 	public void TC_FH_013() throws Exception {
 		logger = report.createTest("To schedule a demo with Name field left empty");
+		//passing inputs and check success status with logger report
 		Homepage H = new Homepage(driver);
 		Corporate C = H.switchCorporate();
 		C.setName("");
@@ -436,13 +435,13 @@ public class TestCases {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
-		logger.log(Status.INFO, "Checking heck whether alert is present");
+
+		logger.log(Status.INFO, "Checking  whether alert is present");
 		if (C.isAlertPresent()) {
 			String s=C.getAlert();
-		try {
-			Assert.assertEquals(s, "Please Enter Name");
-			logger.log(Status.PASS, "Alert Message: "+s);
+			try {
+				Assert.assertEquals(s, "Please Enter Name");
+				logger.log(Status.PASS, "Alert Message: "+s);
 			}
 			catch(Exception e)
 			{
@@ -460,6 +459,7 @@ public class TestCases {
 	@Test(priority = 13)
 	public void TC_FH_014() throws Exception {
 		logger = report.createTest("To schedule a demo with Organization Name field left empty");
+		//passing inputs and check success status with logger report
 		Homepage H = new Homepage(driver);
 		Corporate C = H.switchCorporate();
 		C.setName("Demo Test");
@@ -474,8 +474,8 @@ public class TestCases {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-	
-		logger.log(Status.INFO, "Checking heck whether alert is present");
+
+		logger.log(Status.INFO, "Checking  whether alert is present");
 		if (C.isAlertPresent()) {
 			logger.log(Status.INFO, "Alert is present");
 			String s=C.getAlert();
@@ -489,17 +489,18 @@ public class TestCases {
 				Assert.assertTrue(false);
 
 			}
-				
+
 		} else {
 			logger.log(Status.FAIL, "Alert Error");
 			Assert.assertTrue(false);
 		}
-		
-	}
 
+	}
+	//schedule a demo with Official emailid field field left empty
 	@Test(priority = 14)
 	public void TC_FH_015() throws Exception {
 		logger = report.createTest("To schedule a demo with Official emailid field left empty");
+		//passing inputs and check success status with logger report
 		Homepage H = new Homepage(driver);
 		Corporate C = H.switchCorporate();
 		C.setName("Demo Test");
@@ -515,7 +516,7 @@ public class TestCases {
 			e.printStackTrace();
 		}
 
-		logger.log(Status.INFO, "Checking heck whether alert is present");
+		logger.log(Status.INFO, "Checking  whether alert is present");
 		if (C.isAlertPresent()) {
 			String s=C.getAlert();
 			logger.log(Status.INFO, "Alert is present");
@@ -529,17 +530,18 @@ public class TestCases {
 				Assert.assertTrue(false);
 
 			}
-				
+
 		} else {
 			logger.log(Status.FAIL, "Alert Error");
 			Assert.assertTrue(false);
 		}
 
 	}
-
+	//schedule a demo with Contact Number field left empty
 	@Test(priority = 15)
 	public void TC_FH_016() throws Exception {
 		logger = report.createTest("To schedule a demo with Contact Number field left empty");
+		//passing inputs and check success status with logger report
 		Homepage H = new Homepage(driver);
 		Corporate C = H.switchCorporate();
 		C.setName("Demo Test");
@@ -555,7 +557,7 @@ public class TestCases {
 			e.printStackTrace();
 		}
 
-		logger.log(Status.INFO, "Checking heck whether alert is present");
+		logger.log(Status.INFO, "Checking  whether alert is present");
 		if (C.isAlertPresent()) {
 			String s=C.getAlert();
 			logger.log(Status.INFO, "Alert is present");
@@ -568,16 +570,17 @@ public class TestCases {
 				logger.log(Status.FAIL, "Alert Message: "+s+" : Not Correct");
 				Assert.assertTrue(false);
 			}
-				
+
 		} else {
 			logger.log(Status.FAIL, "Alert Error");
 			Assert.assertTrue(false);
 		}
 	}
-
+	//schedule a demo by giving invalid Official emailid
 	@Test(priority = 16)
 	public void TC_FH_017() throws Exception {
 		logger = report.createTest("To schedule a demo by giving invalid Official emailid");
+		//passing inputs and check success status with logger report
 		Homepage H = new Homepage(driver);
 		Corporate C = H.switchCorporate();
 		C.setName("Demo Test");
@@ -592,7 +595,7 @@ public class TestCases {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		logger.log(Status.INFO, "Checking heck whether alert is present");
+		logger.log(Status.INFO, "Checking whether alert is present");
 		if (C.isAlertPresent()) {
 			String s=C.getAlert();
 			logger.log(Status.INFO, "Alert is present");
@@ -605,16 +608,18 @@ public class TestCases {
 				logger.log(Status.FAIL, "Alert Message: "+s+" : Not Correct");
 				Assert.assertTrue(false);
 			}
-				
+
 		} else {
 			logger.log(Status.FAIL, "Alert Error");
 			Assert.assertTrue(false);
 		}
 	}
 
+	//schedule a demo by giving invalid Contact Number
 	@Test(priority = 17)
 	public void TC_FH_018() throws Exception {
 		logger = report.createTest("To schedule a demo by giving invalid Contact Number");
+		//passing inputs and check success status with logger report
 		Homepage H = new Homepage(driver);
 		Corporate C = H.switchCorporate();
 		C.setName("Demo Test");
@@ -630,7 +635,7 @@ public class TestCases {
 			e.printStackTrace();
 		}
 
-		logger.log(Status.INFO, "Checking heck whether alert is present");
+		logger.log(Status.INFO, "Checking whether alert is present");
 		if (C.isAlertPresent()) {
 			String s=C.getAlert();
 			logger.log(Status.INFO, "Alert is present");
@@ -643,17 +648,19 @@ public class TestCases {
 				logger.log(Status.FAIL, "Alert Message: "+s+" : Not Correct");
 				Assert.assertTrue(false);
 			}
-				
+
 		} else {
 			logger.log(Status.FAIL, "Alert Error");
 			Assert.assertTrue(false);
 		}
-		
+
 	}
 
+	//schedule a demo by giving all fields with valid data
 	@Test(priority = 18)
 	public void TC_FH_019() throws IOException {
 		logger = report.createTest("To schedule a demo by giving all fields with valid data");
+		//passing inputs and check success status with logger report
 		Homepage H = new Homepage(driver);
 		Corporate C = H.switchCorporate();
 		C.setName("Demo Test");
@@ -667,14 +674,14 @@ public class TestCases {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
+
 		try {
 			Screenshot screenshot = new Screenshot(H.driver);
 			screenshot.takeScreenshot("Successful Login");
 			logger.log(Status.INFO, "Screenshot captured");
 
 			Assert.assertEquals(C.getThankYouMsg(), "Thank You. Our team will get in touch with you shortly.");
-			
+
 			logger.log(Status.PASS, "Succesfully scheduled a demo");
 		}
 		catch(Exception e)
@@ -684,9 +691,11 @@ public class TestCases {
 		}
 	}
 
+	//To check  if Name field is accepting only alphanumeric characters
 	@Test(priority = 19)
 	public void TC_FH_020() throws Exception {
 		logger = report.createTest("To check whether alert message is shown when name entered is not alphanumeric");
+		//passing inputs and check success status with logger report
 		Homepage H = new Homepage(driver);
 		Corporate C = H.switchCorporate();
 		C.setName("@nsu1,");
@@ -701,7 +710,7 @@ public class TestCases {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		logger.log(Status.INFO, "Chaking whether alert is present");
+		logger.log(Status.INFO, "Checking whether alert is present");
 		boolean alertPresent=C.isAlertPresent();
 
 		if (alertPresent) {
@@ -713,11 +722,11 @@ public class TestCases {
 			Assert.assertTrue(false);
 		}
 	}
-
+	//To check  if Organization Name field is accepting only alphanumeric characters
 	@Test(priority = 20)
 	public void TC_FH_021() throws Exception {
-		logger = report.createTest(
-				"To check whether alert message is shown when Organization name entered is not alphanumeric");
+		logger = report.createTest("To check whether alert message is shown when Organization name entered is not alphanumeric");
+		//passing inputs and check success status with logger report
 		Homepage H = new Homepage(driver);
 		Corporate C = H.switchCorporate();
 		C.setName("Demo Test");
@@ -732,7 +741,7 @@ public class TestCases {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		logger.log(Status.INFO, "Chaking whether alert is present");
+		logger.log(Status.INFO, "Checking whether alert is present");
 		boolean alertPresent=C.isAlertPresent();
 		if (alertPresent) {
 			String s=C.getAlert();
@@ -743,11 +752,11 @@ public class TestCases {
 			Assert.assertTrue(false);
 		}
 	}
-
+	//To close driver and flsuh reports
 	@AfterSuite
 	public void quitDriver() {
 		report.flush();
-		setup.closeDriver();
+		DriverSetup.closeDriver();
 	}
 
 }

@@ -3,7 +3,7 @@ package com.practo.utils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.Properties;
-
+//To create and load property file
 public class getProperties {
 	public static Properties prop;
 	public static FileInputStream fileInput = null;
